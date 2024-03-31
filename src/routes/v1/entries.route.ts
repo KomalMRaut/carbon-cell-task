@@ -13,6 +13,8 @@ const entriesRouter: Router = Router();
  * @swagger
  * /v1/entries:
  *   get:
+ *     tags:
+ *       - Entries
  *     summary: Get entries
  *     security:
  *       - bearerAuth: []

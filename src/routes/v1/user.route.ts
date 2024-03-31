@@ -17,6 +17,8 @@ const userRouter: Router = Router();
  * @swagger
  * /v1/user/register:
  *   post:
+ *     tags:
+ *       - User
  *     summary: Register a new user
  *     requestBody:
  *       required: true
@@ -52,6 +54,8 @@ userRouter.post(
  * @swagger
  * /v1/user/login:
  *   post:
+ *     tags:
+ *       - User
  *     summary: Login a user
  *     requestBody:
  *       required: true
@@ -85,6 +89,8 @@ userRouter.post('/login', validate({ body: loginUserSchema }), loginUser);
  * @swagger
  * /v1/user/logout:
  *   post:
+ *     tags:
+ *       - User
  *     summary: Logout a user
  *     security:
  *       - bearerAuth: []

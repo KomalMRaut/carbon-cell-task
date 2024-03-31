@@ -57,7 +57,7 @@ export const loginUser = catchAsync(async (req, res, next) => {
   await UserModel.findByIdAndUpdate(user._id, { isLoggedIn: true });
 
   // Create and send JWT token
-  const token = generateToken({ id: user._id, hasFetchAccess: true });
+  const token = generateToken({ id: user._id });
   return new SuccessResponse('Logged in successfully', { token }).send(res);
 });
 

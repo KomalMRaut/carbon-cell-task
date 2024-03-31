@@ -1,4 +1,3 @@
-// Import necessary modules and dependencies
 import Joi from 'joi';
 
 // Validation schema for user registration

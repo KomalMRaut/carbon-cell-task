@@ -65,6 +65,15 @@ export const logoutUser = catchAsync(async (req, res, _next) => {
   const { id } = req.body.decoded;
 
   // Update user login status
+  const user = await UserModel.findById(id).lean().exec();
+  if (!user) {
+    throw new NotFoundError('User not found');
+  }
+
+  if (!user.isLoggedIn) {
+    throw new BadRequestError('User is already logged out');
+  }
+
   await UserModel.findByIdAndUpdate(id, { isLoggedIn: false });
 
   return new SuccessMsgResponse('Logged out successfully').send(res);

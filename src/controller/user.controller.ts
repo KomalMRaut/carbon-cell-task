@@ -5,7 +5,7 @@ import {
   BadRequestError,
   NotFoundError,
 } from '@src/utils/apiError';
-import { SuccessResponse } from '@src/utils/apiResponse';
+import { SuccessMsgResponse, SuccessResponse } from '@src/utils/apiResponse';
 import catchAsync from '@src/utils/catchAsync';
 
 // User sign up
@@ -32,7 +32,7 @@ export const createUser = catchAsync(async (req, res, next) => {
     throw next(new NotFoundError('Failed to create user'));
   }
 
-  return new SuccessResponse('success', user).send(res);
+  return new SuccessResponse('User registered successfully', user).send(res);
 });
 
 // User login
@@ -53,7 +53,19 @@ export const loginUser = catchAsync(async (req, res, next) => {
     throw next(new AuthFailureError(`Invalid password`));
   }
 
+  // Update user login status
+  await UserModel.findByIdAndUpdate(user._id, { isLoggedIn: true });
+
   // Create and send JWT token
   const token = generateToken({ id: user._id, hasFetchAccess: true });
-  return new SuccessResponse('success', token).send(res);
+  return new SuccessResponse('Logged in successfully', { token }).send(res);
+});
+
+export const logoutUser = catchAsync(async (req, res, _next) => {
+  const { id } = req.body.decoded;
+
+  // Update user login status
+  await UserModel.findByIdAndUpdate(id, { isLoggedIn: false });
+
+  return new SuccessMsgResponse('Logged out successfully').send(res);
 });

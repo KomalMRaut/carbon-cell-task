@@ -35,9 +35,7 @@ Then start the server with:
 # Scripts
 ```clean: Remove the coverage, build, and tmp directories
 lint: Run ESLint to lint the TypeScript code
-test: Run Jest to test the code and generate a coverage report
 prettier: Run Prettier to format the code
-test:watch: Run Jest in watch mode
 start:dev: Start the server in development mode with nodemon and ts-node-dev
 build: Compile the TypeScript code into JavaScript and output it to the build directory
 start: Start the server in production mode```

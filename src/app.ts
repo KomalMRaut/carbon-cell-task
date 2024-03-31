@@ -8,6 +8,8 @@ import config from '@src/config/config';
 import { ApiError, InternalError, NotFoundError } from '@src/utils/apiError';
 import logger from '@src/utils/logger';
 import router from '@src/routes/v1/routes';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDocument } from '@src/utils/swaggerOptions';
 
 const app = express();
 
@@ -32,6 +34,9 @@ app.use(cors({ origin: true, optionsSuccessStatus: 200 }));
 
 // v1 api routes
 app.use('/v1', router);
+
+// Swagger UI route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // send back a 404 error for any unknown api request
 app.use((req: Request, _res: Response, next: NextFunction) => {

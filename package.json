@@ -31,6 +31,8 @@
     "joi": "17.6.0",
     "jsonwebtoken": "9.0.0",
     "mongoose": "6.10.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "winston": "^3.13.0",
     "xss-clean": "^0.1.1"
   },
@@ -41,6 +43,8 @@
     "@types/cors": "2.8.12",
     "@types/express": "4.17.13",
     "@types/jsonwebtoken": "8.5.8",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-jest": "^27.2.1",

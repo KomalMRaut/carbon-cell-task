@@ -24,6 +24,7 @@ const envVarsSchema = Joi.object()
     JWT_VERIFY_EMAIL_EXPIRATION: Joi.number()
       .default('30m')
       .description('minutes after which verify email token expires'),
+    INFURA_KEY: Joi.string().required().description('Infura key'),
   })
   .unknown();
 
@@ -54,6 +55,7 @@ const config = {
     resetPasswordExpirationMinutes: envVars.JWT_RESET_PASSWORD_EXPIRATION,
     verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION,
   },
+  infuraKey: envVars.INFURA_KEY,
 };
 
 export default config;

@@ -1,5 +1,6 @@
 import {
   createUser,
+  getEthBalance,
   loginUser,
   logoutUser,
 } from '@src/controller/user.controller';
@@ -102,4 +103,40 @@ userRouter.post('/login', validate({ body: loginUserSchema }), loginUser);
  */
 userRouter.post('/logout', authMiddleware, logoutUser);
 
+//* GET ROUTE
+
+/**
+ * @swagger
+ * /v1/user/balance/{address}:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Fetch the balance of an Ethereum account
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: address
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Ethereum account address
+ *     responses:
+ *       200:
+ *         description: Balance retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 balance:
+ *                   type: string
+ *       400:
+ *         description: Invalid address
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Error
+ */
+userRouter.get('/balance/:address', authMiddleware, getEthBalance);
 export default userRouter;

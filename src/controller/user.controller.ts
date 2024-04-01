@@ -1,3 +1,4 @@
+import config from '@src/config/config';
 import { UserModel } from '@src/model/user.model';
 import { decrypt, encrypt, generateToken } from '@src/services/auth.service';
 import {
@@ -7,6 +8,7 @@ import {
 } from '@src/utils/apiError';
 import { SuccessMsgResponse, SuccessResponse } from '@src/utils/apiResponse';
 import catchAsync from '@src/utils/catchAsync';
+import Web3 from 'web3';
 
 // User sign up
 export const createUser = catchAsync(async (req, res, next) => {
@@ -77,4 +79,23 @@ export const logoutUser = catchAsync(async (req, res, _next) => {
   await UserModel.findByIdAndUpdate(id, { isLoggedIn: false });
 
   return new SuccessMsgResponse('Logged out successfully').send(res);
+});
+
+// User Ethereum balance
+
+export const getEthBalance = catchAsync(async (req, res, next) => {
+  const web3 = new Web3(`https://mainnet.infura.io/v3/${config.infuraKey}`);
+  const { address } = req.params;
+
+  // Check if address is valid
+  if (!web3.utils.isAddress(address)) {
+    throw next(new BadRequestError('Invalid address'));
+  }
+
+  // Get the balance of the address
+  const balanceWei = await web3.eth.getBalance(address);
+  const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
+  return new SuccessResponse('Balance retrieved successfully', {
+    balance: balanceEther,
+  }).send(res);
 });
